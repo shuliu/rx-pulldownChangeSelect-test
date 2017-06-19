@@ -84,17 +84,19 @@ stores.map(response => response.response.stores).subscribe(
 
 /** search with API json */
 const locationSearch = (stores, json) => {
-
+    // TODO
 };
 
 /** events listener */
 
+/** city selector event */
 cityDOMEvent.subscribe(
     (event) => {
         let selector = event.target;
         console.log(selector.value);
         let town = JSON.parse( localStorage.getItem('stores') ).filter(item => item.name === selector.value )[0]['data'] || [];
         townDOM.generatorOption(town, selector.value);
+        storeDOM.optionsClear();
     },
     () => {
         // 查詢失敗等原因
@@ -102,6 +104,8 @@ cityDOMEvent.subscribe(
         storeDOM.optionsEmpty();
     }
 );
+
+/** town select event */
 townDOMEvent.subscribe(
     (item) => {
         let citySelector = cityDOM.options[cityDOM.selectedIndex].value || '';
@@ -116,11 +120,7 @@ townDOMEvent.subscribe(
         setStoreIsEmpty();
     }
 );
-storeDOMEvent.subscribe(item => console.log(item));
 
+/** store select event */
+// storeDOMEvent.subscribe(item => console.log(item));
 
-/** testing */
-// setTimeout(function() {
-//     console.log(cityDOM);
-//     console.log( cityDOM.selectedOptions[0].value );
-// },2000);

@@ -4,6 +4,19 @@
  * selector element prototype
  */
 
+/** 設置 selector 無資料狀態 */
+Object.defineProperty(HTMLSelectElement.prototype, 'optionsClear', {
+    value: function (defaultOption) {
+        // 空 selector 的預設 option
+        const defaultOptionWithEmpty = '<option value="" data-num="" data-store="" >請選擇</option>';
+        // empty options
+        this.options.length = 0;
+        // set empty option
+        this.innerHTML = defaultOption || defaultOptionWithEmpty;
+        return this;
+    }
+});
+
 /** 設置 selector 為空 */
 Object.defineProperty(HTMLSelectElement.prototype, 'optionsEmpty', {
     value: function (defaultOption) {
