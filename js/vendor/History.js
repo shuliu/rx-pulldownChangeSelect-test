@@ -12,7 +12,7 @@ export class History {
         this.keyName = '';
         this.setKey(keyName);
         /** 建立 user 的記錄暫存 */
-        this.user = this.getDefault();
+        this.user = this.query(true);
 
     }
 
