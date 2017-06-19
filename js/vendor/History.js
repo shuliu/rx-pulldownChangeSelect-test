@@ -39,6 +39,8 @@ export class History {
     setValue(key, value= '') {
         if( Object.keys(this.user).indexOf(key) !== -1 ) {
             this.user[key] = value;
+            // save
+            this.save(this.user);
             return true;
         } else {
             return false;
