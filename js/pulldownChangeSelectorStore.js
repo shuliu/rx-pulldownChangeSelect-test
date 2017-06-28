@@ -122,6 +122,8 @@ cityDOMEvent.subscribe(
         let town = JSON.parse( localStorage.getItem('stores') ).filter(item => item.name === selector.value )[0]['data'] || [];
         townDOM.generatorOption(town, selector.value);
         storeDOM.optionsClear();
+
+        history.setValue('city', selector.value);
     },
     () => {
         // 查詢失敗等原因
@@ -139,6 +141,7 @@ townDOMEvent.subscribe(
         let store = town.filter(item => item.name === selector.value )[0]['data'] || [];
 
         storeDOM.generatorOption(store, selector.value);
+        history.setValue('town', selector.value);
     },
     () => {
         // 查詢失敗等原因
@@ -147,5 +150,14 @@ townDOMEvent.subscribe(
 );
 
 /** store select event */
-// storeDOMEvent.subscribe(item => console.log(item));
+storeDOMEvent.subscribe(
+    (item) => {
+        let selector = event.target;
+        history.setValue('store', selector.value);
+    },
+    () => {
+        // 查詢失敗等原因
+        setStoreIsEmpty();
+    }
+);
 

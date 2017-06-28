@@ -1,9 +1,10 @@
 "use strict";
+/* jshint node: true */
 
 const webpack = require('webpack');
 const Path = require('path');
 const merge = require('webpack-merge');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const validate = require('webpack-validator');
 
@@ -37,7 +38,20 @@ const common = {
           // {loader: 'eslint-loader', options: {fix: true, failOnError: true}
         ]
       },
-      { test: /\.ts$/, loader: 'ts-loader' }
+      { test: /\.ts$/, loader: 'ts-loader' },
+      {
+        test: /\.scss$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader"
+        }, {
+          loader: "sass-loader",
+          options: {
+            includePaths: ["scss/main"]
+          }
+        }]
+      }
     ]
   },
   devServer: {
