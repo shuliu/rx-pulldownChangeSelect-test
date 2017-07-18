@@ -119,8 +119,15 @@ const optionSearch = (stores, user) => {
 cityDOMEvent.subscribe(
     (event) => {
         let selector = event.target;
-        let town = JSON.parse( localStorage.getItem('stores') ).filter(item => item.name === selector.value )[0]['data'] || [];
-        townDOM.generatorOption(town, selector.value);
+        let town = [];
+        if( selector.value !== '' ) {
+            town = JSON.parse( localStorage.getItem('stores') ).filter(item => item.name === selector.value )[0]['data'] || [];
+        }
+        if( town.length < 1 ) {
+            townDOM.optionsClear();
+        } else {
+            townDOM.generatorOption(town, selector.value);
+        }
         storeDOM.optionsClear();
 
         history.setValue('city', selector.value);
@@ -137,10 +144,21 @@ townDOMEvent.subscribe(
     (item) => {
         let citySelector = cityDOM.options[cityDOM.selectedIndex].value || '';
         let selector = event.target;
-        let town = JSON.parse( localStorage.getItem('stores') ).filter(item => item.name === citySelector )[0]['data'] || [];
-        let store = town.filter(item => item.name === selector.value )[0]['data'] || [];
+        let town = [];
+        if( selector.value !== '' ) {
+            town = JSON.parse( localStorage.getItem('stores') ).filter(item => item.name === citySelector )[0]['data'] || [];
+        }
+        let store = town.filter(item => item.name === selector.value ) || [];
+        if( store.length > 0 ) {
+            store = store[0]['data'] || [];
+        }
 
-        storeDOM.generatorOption(store, selector.value);
+        if( store.length < 1 ) {
+            storeDOM.optionsClear();
+        } else {
+            storeDOM.generatorOption(store, selector.value);
+        }
+
         history.setValue('town', selector.value);
     },
     () => {
@@ -153,6 +171,7 @@ townDOMEvent.subscribe(
 storeDOMEvent.subscribe(
     (item) => {
         let selector = event.target;
+
         history.setValue('store', selector.value);
     },
     () => {
